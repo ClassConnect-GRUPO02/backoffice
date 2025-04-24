@@ -71,7 +71,7 @@ const DashboardPage = () => {
           (user: User) => user.status === "blocked"
         );
         const admins = users.filter(
-          (user: User) => user.role === "admin" || user.role === "superadmin"
+          (user: User) => user.role === "admin"
         );
 
         setStats({

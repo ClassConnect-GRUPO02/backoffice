@@ -2,7 +2,7 @@ export interface User {
     id: string
     name: string
     email: string
-    role: "admin"
+    role: "admin" | "estudiante" | "docente"
     status: "active" | "blocked"
     createdAt: string
     permissions: Permission[]
