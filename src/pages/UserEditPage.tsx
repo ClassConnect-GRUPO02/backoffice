@@ -211,7 +211,6 @@ const UserEditPage = () => {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="admin">Administrador</SelectItem>
-                        <SelectItem value="superadmin">Super Administrador</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>

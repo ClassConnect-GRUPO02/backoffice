@@ -1,0 +1,138 @@
+/* Contenedor principal */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Se asegura de que ocupe toda la pantalla */
+    padding: 16px;
+    background-color: #f7f7f7; /* Fondo suave para contrastar con la tarjeta */
+  }
+  
+  /* Card */
+  .card {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Sombra más suave */
+    width: 100%;
+    max-width: 420px; /* Un poco más ancho para comodidad */
+    padding: 32px;
+    border: 1px solid #E0E0E0;
+  }
+  
+  /* Header de la tarjeta */
+  .card-header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  
+  .card-title {
+    font-size: 2.25rem; /* Título más grande */
+    font-weight: 700;
+    color: #6200EE;
+    margin-bottom: 8px;
+  }
+  
+  .card-description {
+    font-size: 1.125rem; /* Un tamaño de texto ligeramente más grande */
+    color: #777;
+  }
+  
+  /* Input Styles */
+  .input-container {
+    margin-bottom: 20px; /* Mayor separación entre los inputs */
+  }
+  
+  .label {
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 14px;
+    border-radius: 8px;
+    border: 1px solid #D1D1D1;
+    background-color: #F5F5F5;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box; /* Asegura que el padding no afecte el tamaño del input */
+  }
+  
+  .input:focus {
+    outline: none;
+    border-color: #6200EE;
+    box-shadow: 0 0 0 2px rgba(98, 0, 238, 0.2);
+  }
+  
+  .input-error {
+    border-color: #FF3B30; /* Mejor color para el borde de error */
+  }
+  
+  /* Mensaje de error */
+  .error-message {
+    font-size: 0.875rem;
+    color: #FF3B30;
+    margin-top: 4px;
+    text-align: left; /* Alineación a la izquierda para mejor legibilidad */
+  }
+  
+  /* Estilo del botón */
+  .button {
+    width: 100%;
+    padding: 16px;
+    background-color: #6200EE;
+    color: white;
+    font-size: 1.125rem; /* Un poco más grande para más énfasis */
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .button:disabled {
+    opacity: 0.6;
+  }
+  
+  .button:hover:not(:disabled) {
+    background-color: #3700B3;
+    transform: translateY(-2px); /* Efecto de elevación al pasar el cursor */
+  }
+  
+  /* Loader */
+  .loader {
+    margin-right: 8px;
+    animation: spin 1s linear infinite;
+  }
+  
+  /* Animación de carga */
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* Footer de la tarjeta */
+  .card-footer {
+    margin-top: 24px;
+    text-align: center;
+    font-size: 0.875rem;
+    color: #777;
+  }
+  
+  .card-footer a {
+    color: #6200EE;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  
+  .card-footer a:hover {
+    text-decoration: underline;
+  }
+  

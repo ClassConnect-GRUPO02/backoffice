@@ -1,14 +1,13 @@
 "use client";
 
 import type React from "react";
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
-import DashboardLayout from "../components/DashboardLayout";
-import { Button } from "../../@/components/ui/button";
-import { Input } from "../../@/components/ui/input";
-import { Label } from "../../@/components/ui/label";
+import { useAuth } from "../../contexts/AuthContext";
+import DashboardLayout from "../../components/DashboardLayout";
+import { Button } from "../../../@/components/ui/button";
+import { Input } from "../../../@/components/ui/input";
+import { Label } from "../../../@/components/ui/label";
 import {
   Card,
   CardContent,
@@ -16,15 +15,16 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../../@/components/ui/card";
+} from "../../../@/components/ui/card";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../@/components/ui/select";
+} from "../../../@/components/ui/select";
 import { Loader2 } from "lucide-react";
+import './RegisterPage.css';
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -97,17 +97,17 @@ const RegisterPage = () => {
 
   return (
     <DashboardLayout>
-      <div className="mx-auto max-w-2xl space-y-6">
+      <div className="register-container">
         <div>
-          <h1 className="text-3xl font-bold">Registrar Nuevo Administrador</h1>
-          <p className="text-muted-foreground">
+          <h1 className="title">Registrar Nuevo Administrador</h1>
+          <p className="description">
             Crea una nueva cuenta con acceso administrativo
           </p>
         </div>
 
-        <Card className="border border-border shadow-sm rounded-xl">
+        <Card className="card">
           <CardHeader>
-            <CardTitle className="text-xl">
+            <CardTitle className="card-title">
               Información del Administrador
             </CardTitle>
             <CardDescription>
@@ -117,8 +117,8 @@ const RegisterPage = () => {
           </CardHeader>
 
           <form onSubmit={handleSubmit}>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
+            <CardContent className="card-content">
+              <div className="input-container">
                 <Label htmlFor="name">Nombre completo</Label>
                 <Input
                   id="name"
@@ -129,11 +129,11 @@ const RegisterPage = () => {
                   disabled={isLoading}
                 />
                 {errors.name && (
-                  <p className="text-sm text-destructive">{errors.name}</p>
+                  <p className="error-message">{errors.name}</p>
                 )}
               </div>
 
-              <div className="space-y-2">
+              <div className="input-container">
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
@@ -145,11 +145,11 @@ const RegisterPage = () => {
                   disabled={isLoading}
                 />
                 {errors.email && (
-                  <p className="text-sm text-destructive">{errors.email}</p>
+                  <p className="error-message">{errors.email}</p>
                 )}
               </div>
 
-              <div className="space-y-2">
+              <div className="input-container">
                 <Label htmlFor="password">Contraseña</Label>
                 <Input
                   id="password"
@@ -161,11 +161,11 @@ const RegisterPage = () => {
                   disabled={isLoading}
                 />
                 {errors.password && (
-                  <p className="text-sm text-destructive">{errors.password}</p>
+                  <p className="error-message">{errors.password}</p>
                 )}
               </div>
 
-              <div className="space-y-2">
+              <div className="input-container">
                 <Label htmlFor="confirmPassword">Confirmar contraseña</Label>
                 <Input
                   id="confirmPassword"
@@ -177,13 +177,11 @@ const RegisterPage = () => {
                   disabled={isLoading}
                 />
                 {errors.confirmPassword && (
-                  <p className="text-sm text-destructive">
-                    {errors.confirmPassword}
-                  </p>
+                  <p className="error-message">{errors.confirmPassword}</p>
                 )}
               </div>
 
-              <div className="space-y-2">
+              <div className="input-container">
                 <Label htmlFor="role">Rol</Label>
                 <Select
                   value={formData.role}
@@ -204,10 +202,10 @@ const RegisterPage = () => {
             </CardContent>
 
             <CardFooter>
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button type="submit" className="button" disabled={isLoading}>
                 {isLoading ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <Loader2 className="loader" />
                     Registrando...
                   </>
                 ) : (
