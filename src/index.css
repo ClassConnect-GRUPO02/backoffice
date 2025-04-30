@@ -9,13 +9,6 @@
 }
 
 body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  height: 100%;
-  margin: 0;
-  padding: 0;
   background: linear-gradient(to bottom right, #f2f4f8, #e8eaf6);
   font-family: 'Segoe UI', sans-serif;
 }

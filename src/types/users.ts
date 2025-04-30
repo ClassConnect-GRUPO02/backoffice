@@ -5,7 +5,6 @@ export interface User {
     role: "admin" | "estudiante" | "docente"
     status: "active" | "blocked"
     createdAt: string
-    permissions: Permission[]
   }
   
   export interface Permission {

@@ -5,10 +5,10 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { Users, LayoutDashboard, LogOut, Menu } from "lucide-react";
 import { Button } from "../../@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "../../@/components/ui/sheet";
 import { Avatar, AvatarFallback } from "../../@/components/ui/avatar";
 import { useState } from "react";
-import "../pages/DashboardPage/DashboardPage.css"; // Asegúrate de importar el archivo CSS
+import "./Layout.css"; // Asegúrate de importar el archivo CSS
+
 interface DashboardLayoutProps {
   children: ReactNode;
 }
@@ -22,29 +22,6 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     logout();
     navigate("/login");
   };
-
-  const navigation = [
-    { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-    { name: "Gestión de Usuarios", href: "/users", icon: Users },
-  ];
-
-  const NavLinks = () => (
-    <>
-      {navigation.map((item) => {
-        const isActive = location.pathname === item.href;
-        return (
-          <Link
-            key={item.name}
-            to={item.href}
-            className={`nav-link ${isActive ? "active" : ""}`}
-          >
-            <item.icon className="nav-link-icon" />
-            {item.name}
-          </Link>
-        );
-      })}
-    </>
-  );
 
   return (
     <div className="layout-wrapper">
@@ -76,14 +53,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
       </header>
 
       {/* Main content */}
-      <div className="flex flex-1">
-        {/* Sidebar (desktop) */}
-        <aside className="sidebar">
-          <nav className="sidebar-nav">
-            <NavLinks />
-          </nav>
-        </aside>
-
+      <div className="main-content-container">
         {/* Page content */}
         <main className="main-content">{children}</main>
       </div>
