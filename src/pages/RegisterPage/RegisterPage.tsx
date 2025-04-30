@@ -36,6 +36,7 @@ const RegisterPage = () => {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const { register, isLoading } = useAuth();
+  const [generalError, setGeneralError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,9 +77,10 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setGeneralError(null); // Limpiar error previo
+  
     if (!validateForm()) return;
-
+  
     const userData = {
       name: formData.name,
       email: formData.email,
@@ -88,12 +90,19 @@ const RegisterPage = () => {
       permissions: [],
       createdAt: new Date().toISOString(),
     };
-
-    const success = await register(userData);
-    if (success) {
-      navigate("/users");
+  
+    try {
+      const success = await register(userData);
+      if (success) {
+        navigate("/users"); // ✅ CA 1: Registro exitoso
+      } else {
+        setGeneralError("El registro ha fallado. Verifica los datos ingresados."); // ⚠️ CA 3
+      }
+    } catch (error) {
+      setGeneralError("Error del servidor. Intenta nuevamente más tarde."); // ⚠️ CA 3
     }
   };
+  
 
   return (
     <DashboardLayout>
@@ -193,8 +202,8 @@ const RegisterPage = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="admin">Administrador</SelectItem>
-                    <SelectItem value="superadmin">
-                      Super Administrador
+                    <SelectItem value="docente">
+                      Docente
                     </SelectItem>
                   </SelectContent>
                 </Select>

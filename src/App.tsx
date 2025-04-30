@@ -3,9 +3,7 @@ import { AuthProvider } from "./contexts/AuthContext"
 import ProtectedRoute from "./components/ProtectedRoute"
 import LoginPage from "./pages/LoginPage/LoginPage"
 import RegisterPage from "./pages/RegisterPage/RegisterPage"
-import DashboardPage from "./pages/DashboardPage"
-import UsersManagementPage from "./pages/UsersManagementPage"
-import UserEditPage from "./pages/UserEditPage"
+import DashboardPage from "./pages/DashboardPage/DashboardPage"
 import NotFoundPage from "./pages/NotFoundPage"
 
 function App() {
@@ -27,22 +25,6 @@ function App() {
             element={
               <ProtectedRoute>
                 <DashboardPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/users"
-            element={
-              <ProtectedRoute>
-                <UsersManagementPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/users/:id"
-            element={
-              <ProtectedRoute>
-                <UserEditPage />
               </ProtectedRoute>
             }
           />
