@@ -92,9 +92,10 @@ const RegisterPage = () => {
     };
   
     try {
-      const success = await register(userData);
+      const success = await register(userData.email, userData.name, userData.password); // Cambiar a registerAdmin
       if (success) {
-        navigate("/users"); // ✅ CA 1: Registro exitoso
+        alert("Registro exitoso"); // ✅ CA 1: Registro exitoso
+        navigate("/dashboard"); // ✅ CA 1: Registro exitoso
       } else {
         setGeneralError("El registro ha fallado. Verifica los datos ingresados."); // ⚠️ CA 3
       }

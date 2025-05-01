@@ -10,7 +10,7 @@ interface AuthContextType {
   isLoading: boolean
   isAuthenticated: boolean
   login: (email: string, password: string) => Promise<boolean>
-  register: (userData: Omit<User, "id">) => Promise<boolean>
+  register: (email: string, name: string, password: string) => Promise<boolean>
   logout: () => void
 }
 
@@ -55,11 +55,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const login = async (email: string, password: string) => {
     try {
       setIsLoading(true)
-      const { user: userData, token } = await loginUser(email, password)
+      const { id, token } = await loginUser(email, password)
       localStorage.setItem("token", token)
-      localStorage.setItem("id", userData.id)
-      setUser(userData)
-      alert("Inicio de sesión exitoso")
+      localStorage.setItem("id", id)
       return true
     } catch (error) {
       console.error("Login error:", error)
@@ -70,10 +68,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
-  const register = async (userData: Omit<User, "id">) => {
+  const register = async (email: string, name: string, password: string) => {
     try {
       setIsLoading(true)
-      await registerAdmin(userData)
+      await registerAdmin(email, name, password)
       alert("Registro exitoso")
       
       return true
@@ -90,6 +88,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     logoutUser()
     localStorage.removeItem("token")
+    localStorage.removeItem("id")
     setUser(null)
     alert("Sesión cerrada")
     

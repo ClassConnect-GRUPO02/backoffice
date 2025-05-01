@@ -20,9 +20,9 @@ const LoginPage = () => {
 
     if (!email) {
       newErrors.email = "El email es requerido"
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
+    } /*else if (!/\S+@\S+\.\S+/.test(email)) {
       newErrors.email = "Email inválido"
-    }
+    }*/
 
     if (!password) {
       newErrors.password = "La contraseña es requerida"
@@ -32,7 +32,7 @@ const LoginPage = () => {
     return Object.keys(newErrors).length === 0
   }
 
-  /*
+  
   const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault()
   setGeneralError(null) // Resetear errores generales al inicio
@@ -50,24 +50,7 @@ const LoginPage = () => {
     setGeneralError("Error del servidor. Intenta nuevamente más tarde.") // ⚠️ CA 2: Login fallido por error de servicio
   }
 }
-  */
-
-    //Armar un handler hardcodeado para el login
-    const handleSubmit = async (e: React.FormEvent) => {
-      e.preventDefault()
   
-      if (!validateForm()) return
-  
-      // Simulamos el login exitoso
-      setTimeout(() => {
-        // Guardamos un token simulado en el localStorage
-        localStorage.setItem("token", "fake-token")
-        localStorage.setItem("id", "fake-id")
-        
-        // Redirigimos al Dashboard
-        navigate("/dashboard")
-      }, 1000)
-    }
 
   return (
     <div className="login-container">
@@ -83,7 +66,7 @@ const LoginPage = () => {
               <label htmlFor="email" className="label">Correo electrónico</label>
               <input
                 id="email"
-                type="email"
+                type="text" //CAMBIAR A EMAIL
                 placeholder="admin@example.com"
                 value={email}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}

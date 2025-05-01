@@ -1,11 +1,9 @@
 import axios from "axios";
 import type { User } from "../types/users";
 
-const API_BASE_URL = "https://tu-backend.com/api"; // ← cambia por tu URL real
-
 export const getUsers = async (): Promise<User[]> => {
   const token = localStorage.getItem("token");
-  const response = await axios.get(`${API_BASE_URL}/users`, {
+  const response = await axios.get(`/api/users`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return response.data;
@@ -14,7 +12,7 @@ export const getUsers = async (): Promise<User[]> => {
 export const updateUserRole = async (userId: string, newRole: string): Promise<void> => {
   const token = localStorage.getItem("token");
   await axios.put(
-    `${API_BASE_URL}/users/${userId}/role`,
+    `/api/users/${userId}/role`,
     { role: newRole },
     { headers: { Authorization: `Bearer ${token}` } }
   );
@@ -23,7 +21,7 @@ export const updateUserRole = async (userId: string, newRole: string): Promise<v
 export const toggleUserStatus = async (userId: string, newStatus: "active" | "blocked"): Promise<void> => {
   const token = localStorage.getItem("token");
   await axios.put(
-    `${API_BASE_URL}/users/${userId}/status`,
+    `/api/users/${userId}/status`,
     { status: newStatus },
     { headers: { Authorization: `Bearer ${token}` } }
   );
@@ -36,7 +34,7 @@ export const getUserById = async (id: string): Promise<User> => {
     throw new Error("No token found")
   }
 
-  const response = await fetch(`${API_BASE_URL}/users/${id}`, {
+  const response = await fetch(`/api/users/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -63,7 +61,7 @@ export const logAudit = async ({
 }): Promise<void> => {
   const token = localStorage.getItem("token");
   await axios.post(
-    `${API_BASE_URL}/audit`,
+    `/api/audit`,
     {
       action,
       targetUser,

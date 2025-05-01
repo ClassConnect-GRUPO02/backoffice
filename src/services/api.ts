@@ -1,9 +1,7 @@
 import axios from "axios"
 
-const USERS_URL = (import.meta.env.USERS_API_URL + import.meta.env.USERS_PORT)
-
 export const api = axios.create({
-  baseURL: USERS_URL,
+  baseURL: "/api",
   headers: {
     "Content-Type": "application/json",
   },
