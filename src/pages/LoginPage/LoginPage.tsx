@@ -5,7 +5,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../contexts/AuthContext"
 import { Loader2 } from "lucide-react"
-import "./LoginPage.css"
+import styles from "./LoginPage.module.css"
 
 const LoginPage = () => {
   const [email, setEmail] = useState("")
@@ -32,70 +32,78 @@ const LoginPage = () => {
     return Object.keys(newErrors).length === 0
   }
 
-  
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault()
-  setGeneralError(null) // Resetear errores generales al inicio
+    e.preventDefault()
+    setGeneralError(null) // Resetear errores generales al inicio
 
-  if (!validateForm()) return
+    if (!validateForm()) return
 
-  try {
-    const success = await login(email, password)
-    if (success) {
-      navigate("/dashboard") // ✅ CA 1: Login exitoso
-    } else {
-      setGeneralError("Credenciales incorrectas.") // ⚠️ CA 2: Login fallido por credenciales
+    try {
+      const success = await login(email, password)
+      if (success) {
+        navigate("/dashboard") // ✅ CA 1: Login exitoso
+      } else {
+        setGeneralError("Credenciales incorrectas.") // ⚠️ CA 2: Login fallido por credenciales
+      }
+    } catch (error) {
+      setGeneralError("Error del servidor. Intenta nuevamente más tarde.") // ⚠️ CA 2: Login fallido por error de servicio
     }
-  } catch (error) {
-    setGeneralError("Error del servidor. Intenta nuevamente más tarde.") // ⚠️ CA 2: Login fallido por error de servicio
   }
-}
-  
 
   return (
-    <div className="login-container">
-      <div className="card">
-        <div className="card-header">
-          <h1 className="card-title">ClassConnect Admin</h1>
-          <p className="card-description">Ingresa tus credenciales para acceder al panel de administración</p>
+    <div className={styles.loginContainer}>
+      <div className={styles.card}>
+        <div className={styles.cardHeader}>
+          <h1 className={styles.cardTitle}>ClassConnect Admin</h1>
+          <p className={styles.cardDescription}>Ingresa tus credenciales para acceder al panel de administración</p>
         </div>
 
+        {generalError && (
+          <div className={styles.errorAlert}>
+            <p>{generalError}</p>
+          </div>
+        )}
+
         <form onSubmit={handleSubmit}>
-          <div className="card-content">
-            <div className="input-container">
-              <label htmlFor="email" className="label">Correo electrónico</label>
+          <div className={styles.cardContent}>
+            <div className={styles.inputContainer}>
+              <label htmlFor="email" className={styles.label}>
+                Correo electrónico
+              </label>
               <input
                 id="email"
-                type="text" //CAMBIAR A EMAIL
+                type="text"
                 placeholder="admin@example.com"
                 value={email}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                 disabled={isLoading}
-                className={`input ${errors.email ? 'input-error' : ''}`}
+                className={`${styles.input} ${errors.email ? styles.inputError : ""}`}
               />
-              {errors.email && <p className="error-message">{errors.email}</p>}
+              {errors.email && <p className={styles.errorMessage}>{errors.email}</p>}
             </div>
 
-            <div className="input-container">
-              <label htmlFor="password" className="label">Contraseña</label>
+            <div className={styles.inputContainer}>
+              <label htmlFor="password" className={styles.label}>
+                Contraseña
+              </label>
               <input
                 id="password"
                 type="password"
                 value={password}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                 disabled={isLoading}
-                className={`input ${errors.password ? 'input-error' : ''}`}
+                className={`${styles.input} ${errors.password ? styles.inputError : ""}`}
               />
-              {errors.password && <p className="error-message">{errors.password}</p>}
+              {errors.password && <p className={styles.errorMessage}>{errors.password}</p>}
             </div>
           </div>
 
-          <div className="card-footer">
-            <button type="submit" className="button" disabled={isLoading}>
+          <div className={styles.cardFooter}>
+            <button type="submit" className={styles.button} disabled={isLoading}>
               {isLoading ? (
                 <>
-                  <Loader2 className="loader" />
-                  Iniciando sesión...
+                  <Loader2 className={styles.loader} />
+                  <span>Iniciando sesión...</span>
                 </>
               ) : (
                 "Iniciar sesión"

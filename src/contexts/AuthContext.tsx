@@ -3,7 +3,6 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
 import type { User } from "../types/users"
 import { loginUser, registerAdmin, logoutUser } from "../services/authService"
-import { getUserById } from "@/services/userService"
 
 interface AuthContextType {
   user: User | null
@@ -38,8 +37,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             throw new Error("User ID not found in localStorage")
             
           }
-          const userData = await getUserById(id)
-          setUser(userData)
         }
       } catch (error) {
         console.error("Failed to initialize auth:", error)
@@ -58,6 +55,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const { id, token } = await loginUser(email, password)
       localStorage.setItem("token", token)
       localStorage.setItem("id", id)
+      localStorage.setItem("email", email)
       return true
     } catch (error) {
       console.error("Login error:", error)

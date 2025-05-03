@@ -1,60 +1,55 @@
-"use client";
+"use client"
 
-import { useEffect, useState } from "react";
-import DashboardLayout from "../../components/DashboardLayout";
-import { getUsers, updateUserRole, toggleUserStatus, logAudit } from "../../services/userServiceMock";
-import type { User } from "../../types/users";
-import { Loader2 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../../../@/components/ui/select";
-import { Button } from "../../../@/components/ui/button";
-import "./DashboardPage.css";
+import { useEffect, useState } from "react"
+import DashboardLayout from "../../components/DashboardLayout"
+import { getUsers, updateUserRole, blockUser, unblockUser } from "../../services/userService"
+import type { User } from "../../types/users"
+import { Loader2 } from "lucide-react"
+import { useNavigate } from "react-router-dom"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../../@/components/ui/select"
+import { Button } from "../../../@/components/ui/button"
+import styles from "./DashboardPage.module.css" // Cambiado a CSS Modules
 
 const DashboardPage = () => {
-  const [users, setUsers] = useState<User[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const navigate = useNavigate();
+  const [users, setUsers] = useState<User[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const navigate = useNavigate()
 
   const fetchUsers = async () => {
     try {
-      const users = await getUsers();
-      setUsers(users);
+      const users = await getUsers()
+      setUsers(users)
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error("Error fetching users:", error)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) navigate("/login");
-    fetchUsers();
-  }, [navigate]);
+    const token = localStorage.getItem("token")
+    const id = localStorage.getItem("id")
+    if (!token) navigate("/login")
+    fetchUsers()
+  }, [navigate])
 
   if (isLoading) {
     return (
       <DashboardLayout>
-        <div className="loader-container">
-          <Loader2 className="loader-icon" />
+        <div className={styles.loaderContainer}>
+          <Loader2 className={styles.loaderIcon} />
         </div>
       </DashboardLayout>
-    );
+    )
   }
 
   return (
     <DashboardLayout>
-      <div className="dashboard-page">
-        <h1 className="dashboard-title">Gestión de Usuarios</h1>
+      <div className={styles.dashboardPage}>
+        <h1 className={styles.dashboardTitle}>Gestión de Usuarios</h1>
 
-        <div className="user-table">
-          <div className="user-table-header">
+        <div className={styles.userTable}>
+          <div className={styles.userTableHeader}>
             <span>Nombre</span>
             <span>Rol</span>
             <span>Estado</span>
@@ -63,58 +58,62 @@ const DashboardPage = () => {
           </div>
 
           {users.map((user) => (
-            <div key={user.id} className="user-table-row">
-              <span>{user.name}</span>
+            <div key={user.id} className={styles.userTableRow}>
+              <span data-label="Nombre">{user.name}</span>
 
-              <span>
+              <span data-label="Rol">
                 <Select
                   value={user.role}
                   onValueChange={async (newRole) => {
                     try {
-                      await updateUserRole(user.id, newRole);
-                      await logAudit({
-                        action: "Cambio de rol",
-                        targetUser: user.id,
-                        details: `De ${user.role} a ${newRole}`,
-                        timestamp: new Date().toISOString(),
-                      });
-                      fetchUsers();
+                      await updateUserRole(user.id, newRole)
+                      fetchUsers()
                     } catch {
-                      alert("Error al actualizar rol");
+                      alert("Error al actualizar rol")
                     }
                   }}
                 >
-                  <SelectTrigger><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="alumno">Alumno</SelectItem>
-                    <SelectItem value="docente">Docente</SelectItem>
+                  <SelectTrigger className={styles.selectTrigger}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className={styles.selectContent}>
+                    <SelectItem value="estudiante" className={styles.selectItem}>
+                      Estudiante
+                    </SelectItem>
+                    <SelectItem value="docente" className={styles.selectItem}>
+                      Docente
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </span>
 
-              <span>{user.status}</span>
-              <span>{new Date(user.createdAt).toLocaleDateString()}</span>
+              <span data-label="Estado" className={styles.userStatus}>
+                <div
+                  className={`${styles.statusIndicator} ${user.blocked ? styles.statusBlocked : styles.statusActive}`}
+                ></div>
+                {user.blocked ? "Bloqueado" : "Activo"}
+              </span>
 
-              <span>
+              <span data-label="Registro">{new Date(user.createdAt).toLocaleDateString()}</span>
+
+              <span data-label="Acciones">
                 <Button
                   variant="outline"
+                  className={`${styles.actionButton} ${user.blocked ? styles.unblockButton : styles.blockButton}`}
                   onClick={async () => {
                     try {
-                      const newStatus = user.status === "active" ? "blocked" : "active";
-                      await toggleUserStatus(user.id, newStatus);
-                      await logAudit({
-                        action: newStatus === "active" ? "Desbloqueo" : "Bloqueo",
-                        targetUser: user.id,
-                        details: `Cambio a estado ${newStatus}`,
-                        timestamp: new Date().toISOString(),
-                      });
-                      fetchUsers();
+                      if (user.blocked) {
+                        await unblockUser(user.id)
+                      } else {
+                        await blockUser(user.id)
+                      }
+                      fetchUsers()
                     } catch {
-                      alert("Error al cambiar estado");
+                      alert("Error al cambiar estado")
                     }
                   }}
                 >
-                  {user.status === "active" ? "Bloquear" : "Desbloquear"}
+                  {user.blocked ? "Desbloquear" : "Bloquear"}
                 </Button>
               </span>
             </div>
@@ -122,7 +121,7 @@ const DashboardPage = () => {
         </div>
       </div>
     </DashboardLayout>
-  );
-};
+  )
+}
 
-export default DashboardPage;
+export default DashboardPage
