@@ -39,11 +39,6 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
                 <AvatarFallback className={styles.avatarFallback}>{localStorage.getItem("email")?.toUpperCase().charAt(0) || "A"}</AvatarFallback>
               </Avatar>
 
-              <div className={styles.userInfo}>
-                <p className={styles.userName}>{user?.name}</p>
-                <p className={styles.userEmail}>{user?.email}</p>
-              </div>
-
               <Button variant="outline" className={styles.logoutButton} onClick={handleLogout}>
                 <LogOut className="h-5 w-5" />
                 <span className="sr-only">Cerrar sesión</span>
