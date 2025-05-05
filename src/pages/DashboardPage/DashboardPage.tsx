@@ -92,7 +92,7 @@ const DashboardPage = () => {
                   <SelectTrigger className={styles.selectTrigger}>
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className={styles.selectContent}>
+                  <SelectContent side="bottom" className={styles.selectContent} avoidCollisions={false} position="popper">
                     <SelectItem value="alumno" className={styles.selectItem}>
                       Alumno
                     </SelectItem>
