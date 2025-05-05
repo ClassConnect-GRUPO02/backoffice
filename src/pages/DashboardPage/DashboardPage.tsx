@@ -1,37 +1,48 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import DashboardLayout from "../../components/DashboardLayout"
-import { getUsers, updateUserRole, blockUser, unblockUser } from "../../services/userService"
-import type { User } from "../../types/users"
-import { Loader2 } from "lucide-react"
-import { useNavigate } from "react-router-dom"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../../@/components/ui/select"
-import { Button } from "../../../@/components/ui/button"
-import styles from "./DashboardPage.module.css" // Cambiado a CSS Modules
+import { useEffect, useState } from "react";
+import DashboardLayout from "../../components/DashboardLayout";
+import {
+  getUsers,
+  updateUserRole,
+  blockUser,
+  unblockUser,
+} from "../../services/userService";
+import type { User } from "../../types/users";
+import { Loader2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../../../@/components/ui/select";
+import { Button } from "../../../@/components/ui/button";
+import styles from "./DashboardPage.module.css"; // Cambiado a CSS Modules
 
 const DashboardPage = () => {
-  const [users, setUsers] = useState<User[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const navigate = useNavigate()
+  const [users, setUsers] = useState<User[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   const fetchUsers = async () => {
     try {
-      const users = await getUsers()
-      setUsers(users)
+      const users = await getUsers();
+      setUsers(users);
     } catch (error) {
-      console.error("Error fetching users:", error)
+      console.error("Error fetching users:", error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    const token = localStorage.getItem("token")
-    const id = localStorage.getItem("id")
-    if (!token) navigate("/login")
-    fetchUsers()
-  }, [navigate])
+    const token = localStorage.getItem("token");
+    const id = localStorage.getItem("id");
+    if (!token) navigate("/login");
+    fetchUsers();
+  }, [navigate]);
 
   if (isLoading) {
     return (
@@ -40,7 +51,7 @@ const DashboardPage = () => {
           <Loader2 className={styles.loaderIcon} />
         </div>
       </DashboardLayout>
-    )
+    );
   }
 
   return (
@@ -63,13 +74,18 @@ const DashboardPage = () => {
 
               <span data-label="Rol">
                 <Select
-                  value={user.role}
+                  value={user.userType}
                   onValueChange={async (newRole) => {
+                    const confirmChange = window.confirm(
+                      `¿Estás seguro de cambiar el rol de ${user.name} a ${newRole}?`
+                    );
+                    if (!confirmChange) return;
+
                     try {
-                      await updateUserRole(user.id, newRole)
-                      fetchUsers()
+                      await updateUserRole(user.id, newRole);
+                      fetchUsers();
                     } catch {
-                      alert("Error al actualizar rol")
+                      alert("Error al actualizar rol");
                     }
                   }}
                 >
@@ -77,8 +93,8 @@ const DashboardPage = () => {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent className={styles.selectContent}>
-                    <SelectItem value="estudiante" className={styles.selectItem}>
-                      Estudiante
+                    <SelectItem value="alumno" className={styles.selectItem}>
+                      Alumno
                     </SelectItem>
                     <SelectItem value="docente" className={styles.selectItem}>
                       Docente
@@ -89,29 +105,41 @@ const DashboardPage = () => {
 
               <span data-label="Estado" className={styles.userStatus}>
                 <div
-                  className={`${styles.statusIndicator} ${user.blocked ? styles.statusBlocked : styles.statusActive}`}
+                  className={`${styles.statusIndicator} ${
+                    user.blocked ? styles.statusBlocked : styles.statusActive
+                  }`}
                 ></div>
                 {user.blocked ? "Bloqueado" : "Activo"}
               </span>
 
-              <span data-label="Registro">{new Date(user.createdAt).toLocaleDateString()}</span>
+              <span data-label="Registro">
+                {new Date(user.registrationDate).toLocaleDateString()}
+              </span>
 
               <span data-label="Acciones">
                 <Button
                   variant="outline"
-                  className={`${styles.actionButton} ${user.blocked ? styles.unblockButton : styles.blockButton}`}
+                  className={`${styles.actionButton} ${
+                    user.blocked ? styles.unblockButton : styles.blockButton
+                  }`}
                   onClick={async () => {
+                    const action = user.blocked ? "desbloquear" : "bloquear";
+                    const confirmChange = window.confirm(`¿Estás seguro de que quieres ${action} a ${user.name}?`);
+                  
+                    if (!confirmChange) return;
+                  
                     try {
                       if (user.blocked) {
-                        await unblockUser(user.id)
+                        await unblockUser(user.id);
                       } else {
-                        await blockUser(user.id)
+                        await blockUser(user.id);
                       }
-                      fetchUsers()
+                      fetchUsers();
                     } catch {
-                      alert("Error al cambiar estado")
+                      alert("Error al cambiar estado");
                     }
                   }}
+                  
                 >
                   {user.blocked ? "Desbloquear" : "Bloquear"}
                 </Button>
@@ -121,7 +149,7 @@ const DashboardPage = () => {
         </div>
       </div>
     </DashboardLayout>
-  )
-}
+  );
+};
 
-export default DashboardPage
+export default DashboardPage;

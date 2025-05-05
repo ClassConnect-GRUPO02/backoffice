@@ -2,9 +2,9 @@ export interface User {
     id: string
     name: string
     email: string
-    role: "admin" | "estudiante" | "docente"
+    userType: "admin" | "Alumno" | "Docente"
     blocked: boolean
-    createdAt: string
+    registrationDate: string
   }
   
   export interface Permission {
