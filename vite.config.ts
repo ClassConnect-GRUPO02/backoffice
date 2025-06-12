@@ -2,6 +2,11 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
+import dotenv from 'dotenv'
+dotenv.config()
+
+
+console.log('API URL from env:', process.env.VITE_API_URL);
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -14,9 +19,9 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://35.223.247.76:8080',
+        target: process.env.VITE_API_URL,
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
+        rewrite: (path) => path.replace(/^\/api/, ''),
       }
     }
   }
