@@ -5,6 +5,8 @@ import LoginPage from "./pages/LoginPage/LoginPage"
 import RegisterPage from "./pages/RegisterPage/RegisterPage"
 import DashboardPage from "./pages/DashboardPage/DashboardPage"
 import NotFoundPage from "./pages/NotFoundPage"
+import { ToastContainer } from "react-toastify"; // Importar el ToastContainer
+import "react-toastify/dist/ReactToastify.css"; // Importar los estilos de Toastify
 
 function App() {
   return (
@@ -31,6 +33,7 @@ function App() {
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
+        <ToastContainer />
       </Router>
     </AuthProvider>
   )
