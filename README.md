@@ -49,6 +49,18 @@ cd backoffice
 npm install
 ```
 
+### 3. Configurar variables de entorno
+Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
+
+```env
+VITE_API_URL=http://35.223.247.76:8080
+```
+
+**Variables disponibles:**
+- `VITE_API_URL` - URL base de la API backend
+
+> **Nota:** Las variables de entorno en Vite deben comenzar con `VITE_` para estar disponibles en el cliente.
+
 ## 🎯 Ejecutar el Proyecto
 
 ### Modo Desarrollo con Vite
@@ -141,7 +153,19 @@ El proyecto aprovecha al máximo las capacidades de Vite:
 
 ## 🌐 Variables de Entorno
 
-El proyecto utiliza configuración de proxy en lugar de variables de entorno. Si necesitas cambiar la URL de la API, modifica el archivo `vite.config.ts`.
+El proyecto utiliza variables de entorno para la configuración. Crea un archivo `.env` en la raíz del proyecto:
+
+```env
+VITE_API_URL=http://35.223.247.76:8080
+```
+
+### Variables requeridas:
+- `VITE_API_URL` - URL base de la API backend
+
+### Notas importantes:
+- Todas las variables de entorno en Vite deben comenzar con `VITE_` para estar disponibles en el frontend
+- No incluir el archivo `.env` en el control de versiones (ya está en `.gitignore`)
+- Para diferentes entornos (desarrollo, staging, producción), puedes crear archivos `.env.local`, `.env.development`, `.env.production`
 
 ## 🤝 Contribución
 
