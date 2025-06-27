@@ -9,8 +9,7 @@ import { Button } from "../../../@/components/ui/button"
 import { Input } from "../../../@/components/ui/input"
 import { Label } from "../../../@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../../../@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../../@/components/ui/select"
-import { Loader2, ChevronDown } from "lucide-react"
+import { Loader2 } from "lucide-react"
 import styles from "./RegisterPage.module.css"
 
 const RegisterPage = () => {
@@ -29,10 +28,6 @@ const RegisterPage = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
-  }
-
-  const handleRoleChange = (value: string) => {
-    setFormData((prev) => ({ ...prev, role: value }))
   }
 
   const validateForm = () => {
@@ -87,7 +82,7 @@ const RegisterPage = () => {
         setGeneralError("El registro ha fallado. Verifica los datos ingresados.")
       }
     } catch (error) {
-      setGeneralError("Error del servidor. Intenta nuevamente más tarde.")
+      setGeneralError("Error del servidor. Intenta nuevamente más tarde: " + error)
     }
   }
 

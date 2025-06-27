@@ -1,54 +1,165 @@
-# React + TypeScript + Vite
+# 🏢 Backoffice - Sistema de Gestión de Usuarios
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Un sistema de backoffice moderno desarrollado con React, TypeScript y Vite para la gestión y administración de usuarios. Incluye autenticación, control de roles y una interfaz intuitiva para administradores.
 
-Currently, two official plugins are available:
+## ✨ Características Principales
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🔐 **Sistema de Autenticación** - Login seguro con JWT
+- 👥 **Gestión de Usuarios** - CRUD completo de usuarios
+- 🎭 **Control de Roles** - Manejo de roles (admin, estudiante, docente)
+- 🚫 **Bloqueo de Usuarios** - Capacidad de bloquear/desbloquear usuarios
+- 📱 **Diseño Responsive** - Optimizado para todos los dispositivos
+- 🎨 **UI Moderna** - Interfaz atractiva con Tailwind CSS y shadcn/ui
+- ⚡ **Desarrollo Rápido** - Hot Module Replacement (HMR) con Vite
 
-## Expanding the ESLint configuration
+## 🛠️ Tecnologías Utilizadas
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Frontend
+- **React 19** - Librería principal de UI
+- **TypeScript** - Tipado estático
+- **Vite** - Build tool y dev server
+- **React Router DOM** - Enrutamiento SPA
+- **Tailwind CSS** - Framework de estilos
+- **shadcn/ui** - Componentes UI reutilizables
+- **Radix UI** - Componentes accesibles
+- **Lucide React** - Iconos modernos
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### Herramientas de Desarrollo
+- **ESLint** - Linting de código
+- **PostCSS** - Procesamiento de CSS
+- **Axios** - Cliente HTTP
+
+## 📋 Prerrequisitos
+
+Antes de comenzar, asegúrate de tener instalado:
+
+- **Node.js** (versión 18 o superior)
+- **npm** o **yarn** como gestor de paquetes
+
+## 🚀 Instalación y Configuración
+
+### 1. Clonar el repositorio
+```bash
+git clone <url-del-repositorio>
+cd backoffice
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+### 2. Instalar dependencias
+```bash
+npm install
 ```
+
+## 🎯 Ejecutar el Proyecto
+
+### Modo Desarrollo con Vite
+Para iniciar el servidor de desarrollo:
+
+```bash
+npm run dev
+```
+
+Esto iniciará el servidor de desarrollo de Vite en `http://localhost:5173` con las siguientes características:
+- ⚡ Hot Module Replacement (HMR)
+- 🔄 Recarga automática al guardar cambios
+- 📊 Proxy configurado para las llamadas a la API
+
+### Construir para Producción
+Para generar la build de producción:
+
+```bash
+npm run build
+```
+
+### Previsualizar Build de Producción
+Para previsualizar la build de producción localmente:
+
+```bash
+npm run preview
+```
+
+### Linting
+Para ejecutar el linter y revisar el código:
+
+```bash
+npm run lint
+```
+
+## 📁 Estructura del Proyecto
+
+```
+backoffice/
+├── src/
+│   ├── components/          # Componentes reutilizables
+│   │   ├── DashboardLayout.tsx
+│   │   └── ProtectedRoute.tsx
+│   ├── contexts/           # Context API de React
+│   │   └── AuthContext.tsx
+│   ├── pages/              # Páginas de la aplicación
+│   │   ├── DashboardPage/  # Panel principal
+│   │   ├── LoginPage/      # Página de login
+│   │   ├── RegisterPage/   # Página de registro
+│   │   └── NotFoundPage.tsx
+│   ├── services/           # Servicios de API
+│   │   ├── api.ts          # Configuración de Axios
+│   │   ├── authService.ts  # Servicios de autenticación
+│   │   └── userService.ts  # Servicios de usuarios
+│   ├── types/              # Definiciones de TypeScript
+│   │   └── users.ts
+│   └── App.tsx             # Componente principal
+├── @/                      # Alias para componentes UI
+│   └── components/ui/      # Componentes de shadcn/ui
+├── public/                 # Archivos estáticos
+└── package.json
+```
+
+## 🔑 Funcionalidades Principales
+
+### Autenticación
+- Login con email y contraseña
+- Gestión de tokens JWT
+- Redirección automática según estado de autenticación
+
+### Dashboard de Usuarios
+- Visualización de todos los usuarios registrados
+- Cambio de roles (estudiante/docente)
+- Bloqueo y desbloqueo de usuarios
+- Interfaz responsive con tabla adaptativa
+
+### Rutas Protegidas
+- Control de acceso basado en autenticación
+- Redirección automática a login si no está autenticado
+
+## 🎨 Características de Vite
+
+El proyecto aprovecha al máximo las capacidades de Vite:
+
+- **Inicio Rápido**: Servidor de desarrollo ultra-rápido
+- **HMR**: Hot Module Replacement para desarrollo eficiente
+- **Optimización**: Build optimizado para producción
+- **Plugins**: Integración con React y Tailwind CSS
+- **Proxy**: Configuración de proxy para API backend
+
+## 🌐 Variables de Entorno
+
+El proyecto utiliza configuración de proxy en lugar de variables de entorno. Si necesitas cambiar la URL de la API, modifica el archivo `vite.config.ts`.
+
+## 🤝 Contribución
+
+1. Fork del proyecto
+2. Crear una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit de tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abrir un Pull Request
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia ISC.
+
+## 🚀 Scripts Disponibles
+
+| Script | Descripción |
+|--------|-------------|
+| `npm run dev` | Inicia el servidor de desarrollo con Vite |
+| `npm run build` | Construye la aplicación para producción |
+| `npm run preview` | Previsualiza la build de producción |
+| `npm run lint` | Ejecuta ESLint para revisar el código |

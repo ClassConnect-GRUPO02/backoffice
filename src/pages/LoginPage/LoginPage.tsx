@@ -46,7 +46,7 @@ const LoginPage = () => {
         setGeneralError("Credenciales incorrectas.") // ⚠️ CA 2: Login fallido por credenciales
       }
     } catch (error) {
-      setGeneralError("Error del servidor. Intenta nuevamente más tarde.") // ⚠️ CA 2: Login fallido por error de servicio
+      setGeneralError("Error del servidor. Intenta nuevamente más tarde: " + error) // ⚠️ CA 2: Login fallido por error de servicio
     }
   }
 
